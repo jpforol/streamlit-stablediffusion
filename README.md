@@ -23,27 +23,28 @@ Este é um chatbot desenvolvido em Streamlit que utiliza o modelo Stable Diffusi
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
-
+   git clone https://github.com/jpforol/streamlit-stablediffusion
+   cd streamlit-stablediffusion
+   ```
 2. Crie e ative um ambiente virtual:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate # No Windows, use `venv\Scripts\activate`
-
+   ```bash
+   python -m venv venv
+   source venv/bin/activate # No Windows, use `venv\Scripts\activate`
+   ```
 3. Instale as dependências:
-    ```bash
-    pip install -r requirements.txt
-
+   ```bash
+   pip install -r requirements.txt
+   ```
 4. Adicione seu token da Hugging Face ao arquivo `secrets.toml`:
-    ```toml
-    [hugging_face_token]
-    api_key = "your_hugging_face_token"
+   ```toml
+   [hugging_face_token]
+   api_key = "your_hugging_face_token"
+   ```
 
 ## Uso
 
 1. Execute o aplicativo Streamlit:
-    ```bash
-    streamlit run streamlit_app.py
-
+   ```bash
+   streamlit run streamlit_app.py
+   ```
 2. Interaja com o chatbot, inserindo descrições de imagens e recebendo imagens geradas.
