@@ -38,22 +38,24 @@ if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
-    # COnsulta para Stable Diffusion
-    headers = {"Authorization": f"Bearer {st.secrets.hugging_face_token.api_key}"}
-    image_bytes = query_stabilitydiff(
-        {
-            "inputs": prompt,
-        },
-        headers,
-    )
+    with st.spinner("Carregando sua Imagem..."):
 
-    # Imagem de Retorno
-    image = Image.open(io.BytesIO(image_bytes))
-    msg = f'Aqui está sua imagem relacionada a "{prompt}"'
+        # Consulta para Stable Diffusion
+        headers = {"Authorization": f"Bearer {st.secrets.hugging_face_token.api_key}"}
+        image_bytes = query_stabilitydiff(
+            {
+                "inputs": prompt,
+            },
+            headers,
+        )
 
-    # Apresentar Resultado
-    st.session_state.messages.append(
-        {"role": "assistant", "content": msg, "prompt": prompt, "image": image}
-    )
-    st.chat_message("assistant").write(msg)
-    st.chat_message("assistant").image(image, caption=prompt, use_column_width=True)
+        # Imagem de Retorno
+        image = Image.open(io.BytesIO(image_bytes))
+        msg = f'Aqui está sua imagem relacionada a "{prompt}"'
+
+        # Apresentar Resultado
+        st.session_state.messages.append(
+            {"role": "assistant", "content": msg, "prompt": prompt, "image": image}
+        )
+        st.chat_message("assistant").write(msg)
+        st.chat_message("assistant").image(image, caption=prompt, use_column_width=True)
