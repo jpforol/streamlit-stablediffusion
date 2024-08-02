@@ -4,14 +4,22 @@ import io
 from PIL import Image
 
 
-def query_stabilitydiff(payload, headers):
-    API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+def query_stabilitydiff(model, payload, headers):
+    API_URL = "https://api-inference.huggingface.co/models/" + model
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.content
 
 
 st.title("💬 Chatbot - Texto para Imagem")
 st.caption("🚀 Uma aplicação de Chatbot com Streamlit com tecnologia Stable Diffusion")
+st.session_state.option_model = st.selectbox(
+    "Selecione o modelo:",
+    (
+        "stabilityai/stable-diffusion-xl-base-1.0",
+        "stabilityai/stable-diffusion-3-medium-diffusers",
+        "alvdansen/littletinies",
+    ),
+)
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
@@ -43,6 +51,7 @@ if prompt := st.chat_input():
         # Consulta para Stable Diffusion
         headers = {"Authorization": f"Bearer {st.secrets.hugging_face_token.api_key}"}
         image_bytes = query_stabilitydiff(
+            st.session_state.option_model,
             {
                 "inputs": prompt,
             },
@@ -59,3 +68,15 @@ if prompt := st.chat_input():
         )
         st.chat_message("assistant").write(msg)
         st.chat_message("assistant").image(image, caption=prompt, use_column_width=True)
+
+        # Botão de Download
+        buf = io.BytesIO()
+        image.save(buf, format="PNG")
+        byte_im = buf.getvalue()
+
+        st.download_button(
+            label="Download Imagem",
+            data=byte_im,
+            file_name=f"image.png",
+            mime="image/png",
+        )
