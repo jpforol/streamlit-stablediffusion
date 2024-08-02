@@ -1,0 +1,5 @@
+[dot files]
+secrets.toml
+
+[dir]
+venv
