@@ -2,12 +2,17 @@ import streamlit as st
 import requests
 import io
 from PIL import Image
+from deep_translator import GoogleTranslator
 
 
 def query_stabilitydiff(model, payload, headers):
     API_URL = "https://api-inference.huggingface.co/models/" + model
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.content
+
+
+# Instancia do Tradutor
+tradutor = GoogleTranslator(source="pt", target="en")
 
 
 st.title("💬 Chatbot - Texto para Imagem")
@@ -18,6 +23,7 @@ st.session_state.option_model = st.selectbox(
         "stabilityai/stable-diffusion-xl-base-1.0",
         "alvdansen/littletinies",
         "alvdansen/phantasma-anime",
+        "alvdansen/frosting_lane_redux",
     ),
 )
 
@@ -43,7 +49,10 @@ if prompt := st.chat_input():
         st.stop()
 
     # Prompt de Entrada
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    print(tradutor.translate(prompt))
+    st.session_state.messages.append(
+        {"role": "user", "content": tradutor.translate(prompt)}
+    )
     st.chat_message("user").write(prompt)
 
     with st.spinner("Carregando sua Imagem..."):
