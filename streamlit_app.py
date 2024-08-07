@@ -16,7 +16,9 @@ tradutor = GoogleTranslator(source="pt", target="en")
 
 
 st.title("💬 Chatbot - Texto para Imagem")
-st.caption("🚀 Uma aplicação de Chatbot com Streamlit com tecnologia Stable Diffusion")
+st.caption(
+    "🚀 Uma aplicação de Chatbot com Streamlit com tecnologia de Geração de Imagens a partir de modelos de IA"
+)
 st.session_state.option_model = st.selectbox(
     "Selecione o modelo:",
     (
