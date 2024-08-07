@@ -15,9 +15,9 @@ st.caption("🚀 Uma aplicação de Chatbot com Streamlit com tecnologia Stable 
 st.session_state.option_model = st.selectbox(
     "Selecione o modelo:",
     (
-        "kvikontent/midjourney-v6stabilityai",
-        "stabilityai/stable-diffusion-3-medium-diffusers",
+        "stabilityai/stable-diffusion-xl-base-1.0",
         "alvdansen/littletinies",
+        "alvdansen/phantasma-anime",
     ),
 )
 
